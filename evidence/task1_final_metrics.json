@@ -1,0 +1,30 @@
+{
+  "task": "Task 1",
+  "group": "GROUP10",
+  "final_submission_ref": 58295750,
+  "final_public_macro_f1": 0.92488,
+  "previous_best_public_macro_f1": 0.92428,
+  "pre_handover_anchor_public_macro_f1": 0.91852,
+  "public_improvement_vs_previous_best": 0.0006,
+  "public_improvement_vs_pre_handover": 0.00636,
+  "top_ten_boundary_at_audit": 0.92456,
+  "leaderboard_position_at_query": 9,
+  "final_sha256": "c7dd8ea7f430067695d5f9c2d993a5f22432588af273c455879b7978c8ba5972",
+  "class_counts": {
+    "1": 825,
+    "2": 825,
+    "3": 825,
+    "4": 825
+  },
+  "data": {
+    "train_rows": 9900,
+    "test_rows": 3300,
+    "classes": {
+      "1": "Sunny",
+      "2": "Cloudy",
+      "3": "Rainy",
+      "4": "Snowy"
+    }
+  },
+  "post_handover_submission_count": 14
+}

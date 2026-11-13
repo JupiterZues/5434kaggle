@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GROUP10 · COMP5434 Project Portfolio</title>
+<style>
+:root{--navy:#17324d;--teal:#2a9d8f;--orange:#f4a261;--coral:#e76f51;--paper:#f4f7fa;--slate:#5c677d}
+*{box-sizing:border-box} body{margin:0;background:#eef3f6;color:var(--navy);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+main{max-width:1160px;margin:0 auto;padding:28px} .hero{background:linear-gradient(135deg,#17324d,#244f69);color:white;border-radius:26px;padding:48px 52px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:280px;height:280px;border:1px solid rgba(255,255,255,.25);border-radius:50%;right:-60px;top:-90px}
+.kicker{color:#e9c46a;letter-spacing:.16em;font-size:12px;font-weight:700} h1{font-size:48px;line-height:1.1;margin:14px 0 12px;max-width:800px} .hero p{font-size:17px;max-width:760px;color:#dce9f0}
+.tag{display:inline-block;padding:8px 13px;border:1px solid rgba(255,255,255,.3);border-radius:999px;margin:16px 8px 0 0;font-size:12px}
+section{margin:26px 0} h2{font-size:26px;margin:0 0 14px} h3{font-size:18px;margin:0 0 8px}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:-18px;position:relative} .metrics article{background:white;border-radius:18px;padding:22px 24px;box-shadow:0 10px 30px rgba(23,50,77,.09);border-left:6px solid var(--teal)}
+.metrics article:nth-child(2){border-left-color:var(--orange)} .metrics strong{display:block;font-size:38px;color:var(--teal)} .metrics article:nth-child(2) strong{color:var(--orange)} .metrics small{color:var(--slate)} .eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;color:var(--slate)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px} .panel{background:white;border-radius:16px;padding:20px;box-shadow:0 7px 22px rgba(23,50,77,.06)} .panel p{color:var(--slate);margin:0}
+.quote{font-size:21px;background:#e4f2ef;border-left:5px solid var(--teal);padding:20px 24px;border-radius:10px}
+img{max-width:100%;display:block;border-radius:12px} .diagram{background:white;padding:16px;border-radius:16px;margin:12px 0;box-shadow:0 7px 22px rgba(23,50,77,.06)}
+.links{display:grid;grid-template-columns:repeat(2,1fr);gap:12px} .links a{background:white;padding:15px 18px;border-radius:12px;text-decoration:none;color:var(--navy);font-weight:700;border:1px solid #dfe8ee} .links a:hover{border-color:var(--teal);transform:translateY(-1px)}
+.note{background:#fff4e8;border-left:5px solid var(--orange);padding:16px 20px;border-radius:10px;color:var(--slate)} footer{color:var(--slate);font-size:12px;padding:30px 4px}
+@media(max-width:800px){main{padding:14px} .hero{padding:34px 26px} h1{font-size:34px} .metrics,.grid,.links{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main>
+<section class="hero"><div class="kicker">GROUP10 · COMP5434 · PROJECT PORTFOLIO</div><h1>Two Kaggle systems.<br>One validation-first workflow.</h1><p>天气分类与评论评分预测：从数据审计、防泄漏验证、GPU 实验，到 nested ensemble 和可复现提交。</p><span class="tag">OOF-safe validation</span><span class="tag">Spark</span><span class="tag">TabPFN</span><span class="tag">DeBERTa</span><span class="tag">nested ensembling</span></section>
+
+<section class="metrics">
+  <article><span class="eyebrow">TASK 1</span><strong>0.92488</strong><small>Public Macro-F1 · ref 58295750 · rank ≈ 9</small></article>
+  <article><span class="eyebrow">TASK 2</span><strong>0.46326</strong><small>Public RMSE · ref 58283782</small></article>
+</section>
+
+<section class="quote">先修数据，再增加模型复杂度；先做同折验证，再做权重搜索；最终提交必须可追溯、可复核。</section>
+<section><h2>项目地图 / Project map</h2><div class="diagram"><img src="diagrams/全项目技术架构图.png" alt="Overall project architecture"></div></section>
+<section><h2>两个任务的技術主线</h2><div class="grid"><article class="panel"><h3>Task 1 · Tabular classification</h3><p>Tree ensembles → TabPFN-3.5 → specialist/OVR signals → 825-per-class quota → four-row closed cycle. Final: 0.92488.</p></article><article class="panel"><h3>Task 2 · Review regression</h3><p>Amazon source matching → clean labels → Spark relational features → DeBERTa-v3-large → cross-fitted side stack → six-stream nested blend → exact-star. Final: 0.46326.</p></article><article class="panel"><h3>工程纪律 / Engineering discipline</h3><p>Fixed folds · OOF/test provenance · cross-fitting · class quotas · submission hash validation · explicit limitation notes.</p></article></div></section>
+<section><h2>Task 1 technical route</h2><div class="diagram"><img src="diagrams/Task1技术路线图.png" alt="Task 1 route"></div></section>
+<section><h2>Task 2 technical route</h2><div class="diagram"><img src="diagrams/Task2技术路线图.png" alt="Task 2 route"></div></section>
+<section><h2>关键发现 / Key findings</h2><div class="grid"><article class="panel"><h3>Label quality dominated</h3><p>Task 2 source matching changed the target from noisy course labels to source ratings; supplied labels agreed only about 80% of the time.</p></article><article class="panel"><h3>Small correction, ranking impact</h3><p>Task 1 cycle4 changed only four rows while preserving 825 predictions per class and improved Public Macro-F1 to 0.92488.</p></article><article class="panel"><h3>Diversity after validation</h3><p>TabPFN, tree models and DeBERTa streams were retained only when same-row nested OOF evidence supported them.</p></article></div></section>
+<section><h2>风险与边界 / Risks</h2><div class="note">Task 1 Public/private variance and Task 2 external-data policy are explicit risks. Test source ratings are diagnostic only and do not enter fitting, feature construction, or blend selection. Total offline time is not claimed because all stages were not timed under one unified protocol.</div></section>
+<section><h2>下载文件 / Documents</h2><div class="links"><a href="documents/TASK1_GROUP10_REPORT.docx">Task 1 报告 DOCX</a><a href="documents/TASK1_GROUP10_SLIDES.pptx">Task 1 PPT</a><a href="documents/TASK2_GROUP10_REPORT.docx">Task 2 报告 DOCX</a><a href="documents/TASK2_GROUP10_SLIDES.pptx">Task 2 PPT</a><a href="documents/GROUP10_Task2技术详解与答辩手册.docx">Task 2 技术手册</a><a href="documents/GROUP10全项目技术总结.docx">全项目技术总结</a><a href="documents/GROUP10任务1任务2_七分钟中英对照演讲稿与问答.docx">中英对照演讲稿与问答</a><a href="code/GROUP10_DELIVERY.zip">代码交付包 ZIP</a></div></section>
+<footer>GROUP10 · COMP5434 · Task 1 + Task 2 · 2026-11-13<br>Open this local HTML to browse the portfolio. No external JavaScript or network is required.</footer>
+</main></body></html>
